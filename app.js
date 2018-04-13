@@ -77,5 +77,17 @@ app.put("/chirps/:id", (req, res) => {
 
 //Delete a chirp
 // Hint: .destroy() is the method to delete a record
+app.delete("/chirps/:id", (req, res) => {
+  var chirpId = req.params.id;
+
+  // Step 1: Retrieve specific chirp via its ID in the URL
+  models.Chirp.findById(chirpId).then((chirp) => {
+    // Step 2: Destroy that chirp
+    chirp.destroy().then(() => {
+      // Step 3: Redirect back to show all chirps page
+      res.redirect("/chirps");
+    });
+  });
+});
 
 app.listen(process.env.PORT || 3000);
